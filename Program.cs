@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-namespace Homework2
+namespace ConsoleApp3
 {
     class Program
     {
@@ -12,96 +8,75 @@ namespace Homework2
             Task1();
             Task2();
             Task3();
-            Task4();
         }
-
         static void Task1()
         {
-            bool name = false;
-            Console.WriteLine("Enter 3 float numbers: ");
-            for (int i = 0; i < 3; i++)
+            int countA = 0, 
+                countO = 0, 
+                countI = 0, 
+                countE = 0;
+            Console.WriteLine("Enter text: ");
+            string Text = Console.ReadLine();
+            for (int j = 0; j < Text.Length; j++)
             {
-                float a = Convert.ToSingle(Console.ReadLine());
-                if (a < 5.0 && a > -5.0)
+                if (Text[j] == 'a')
                 {
-                    name = true;
+                    countA++;
                 }
-                else
+                if (Text[j] == 'o')
                 {
-                    name = false;
-                    break;
+                    countO++;
+                }
+                if (Text[j] == 'i')
+                {
+                    countI++;
+                }
+                if (Text[j] == 'e')
+                {
+                    countE++;
                 }
             }
-            string result = (name) ? "True!" : "False!";
-            Console.WriteLine(result);
-            Console.ReadLine();
+            int countLetters = countA + countO + countI + countE;
+            Console.WriteLine("Letters: {0}\nA: {1}\nO: {2}\nI: {3}\nE: {4}", countLetters, countA, countO, countI, countE);
         }
         static void Task2()
         {
-            Console.WriteLine("Enter 3 numbers: ");
-            int one = Convert.ToInt32(Console.ReadLine());
-            int count = 0, max = one, min = one;
-            do
+            Console.WriteLine("Enter number of month: ");
+            int number = Convert.ToInt32(Console.ReadLine());
+            try
             {
-                int twonumb = Convert.ToInt32(Console.ReadLine());
-                if (min > twonumb)
-                {
-                    min = twonumb;
-                }
-                if (max < twonumb)
-                {
-                    max = twonumb;
-                }
-                count++;
-            } while (count < 2);
-            Console.WriteLine("Max: {0} \nMin: {1}", max, min);
+                int Mdays = System.DateTime.DaysInMonth(2021, number);
+                Console.WriteLine("Days in month: {0}", Mdays);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                Console.WriteLine("Error month!");
+            }
             Console.ReadLine();
         }
-
         static void Task3()
         {
-            int error = Convert.ToInt32(Console.ReadLine());
-            string result = Enum.GetName(typeof(HTTPErrors), error);
-            if (error < 400 || error > 411)
+            Console.WriteLine("Enter 10 numbers: ");
+            int number, first = 0, last = 1;
+            bool check = false;
+            for (int i = 0; i < 10; i++)
             {
-                Console.WriteLine("Not found");
+                number = Convert.ToInt32(Console.ReadLine());
+                if (i < 5)
+                {
+                    if (number < 0)
+                    {
+                        check = true;
+                    }
+                    first += number;
+                }
+                else
+                {
+                    last *= number;
+                }
             }
-            else
-            {
-                Console.WriteLine("HTTP Erorr name: {0}.", result);
-            }
-            Console.ReadLine();
+            string output = (check) ? Convert.ToString(last) : Convert.ToString(first);
+            Console.WriteLine("Result: {0}.", output);
         }
-        static void Task4()
-        {
-            var dog = new Dog();
-            dog.name = "Charlie";
-            dog.mark = "Doberman";
-            dog.age = 10;
-            Console.WriteLine(dog);
-            Console.ReadLine();
-        }
-    }
-    public enum HTTPErrors
-    {
-        Error_Bad_Request = 400,
-        Unauthorized = 401,
-        Payment_Required = 402,
-        Forbidden = 403,
-        Not_Found = 404,
-        Method_Not_Allowed = 405,
-        Not_Acceptable = 406,
-        Proxy_Authentication_Required = 407,
-        Request_Timeout = 408,
-        Conflict = 409,
-        Gone = 410,
-        Length_Required = 411,
-    }
-    public struct Dog
-    {
-        public string name;
-        public string mark;
-        public int age;
-        public override string ToString() => $"({name},{mark},{age})";
     }
 }
